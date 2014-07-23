@@ -131,6 +131,11 @@ require 'spec_helper'
     context 'when using network mode' do
       let(:params) { {'command' => 'command', 'image' => 'nginx', 'net' => 'host'} }
       it { should contain_file(initscript).with_content(/--net host/) }
+      end
+
+    context 'when passing an image_tag' do
+      let(:params) { {'command' => 'command', 'image' => 'ubuntu', 'image_tag' => 'trusty'} }
+      it { should contain_file(initscript).with_content(/ubuntu:trusty/) }
     end
 
     context 'with an title that will not format into a path' do

@@ -21,6 +21,7 @@ define docker::run(
   $restart_service = true,
   $disable_network = false,
   $privileged = false,
+  $image_tag = undef
 ) {
   validate_re($image, '^[\S]*$')
   validate_re($title, '^[\S]*$')

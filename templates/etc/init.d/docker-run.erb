@@ -76,7 +76,7 @@ start() {
             "--link #{link}" }.join(' ') %> \
         <% end %> \
         <% if @use_name %>--name <%= @name %><% end %> \
-        <%= @image %> \
+        <% if @image_tag %><%= @image %>:<%= @image_tag %><%else%><%= @image %><%end%> \
         <% if @command %> <%= @command %><% end %>
     retval=$?
     echo
