@@ -54,13 +54,19 @@ describe 'docker', :type => :class do
         service_config_file = '/etc/sysconfig/docker'
 
         context 'with proxy param' do
-          let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
+          let(:facts) {
+            super().merge({
+                :http_proxy => 'http://127.0.0.1:3128'})
+          }
           it { should contain_file(service_config_file).with_content(/export http_proxy=http:\/\/127.0.0.1:3128/) }
           it { should contain_file(service_config_file).with_content(/export https_proxy=http:\/\/127.0.0.1:3128/) }
         end
 
         context 'with no_proxy param' do
-          let(:params) { {'no_proxy' => '.github.com' } }
+          let(:facts) {
+            super().merge({
+                :no_proxy => '.github.com'})
+          }
           it { should contain_file(service_config_file).with_content(/export no_proxy=.github.com/) }
         end
       end
@@ -71,12 +77,19 @@ describe 'docker', :type => :class do
       it { should contain_class('docker::config') }
 
       context 'with proxy param' do
-        let(:params) { {'proxy' => 'http://127.0.0.1:3128' } }
-        it { should contain_file(service_config_file).with_content(/export http_proxy=http:\/\/127.0.0.1:3128\nexport https_proxy=http:\/\/127.0.0.1:3128/) }
+        let(:facts) {
+          super().merge({
+              :http_proxy => 'http://127.0.0.1:3128'})
+        }
+        it { should contain_file(service_config_file).with_content(/export http_proxy=http:\/\/127.0.0.1:3128/) }
+        it { should contain_file(service_config_file).with_content(/export https_proxy=http:\/\/127.0.0.1:3128/) }
       end
 
       context 'with no_proxy param' do
-        let(:params) { {'no_proxy' => '.github.com' } }
+        let(:facts) {
+          super().merge({
+              :no_proxy => '.github.com'})
+        }
         it { should contain_file(service_config_file).with_content(/export no_proxy=.github.com/) }
       end
 

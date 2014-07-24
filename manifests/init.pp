@@ -93,6 +93,8 @@ class docker(
   validate_re($::osfamily, '^(Debian|RedHat)$', 'This module only works on Debian and Red Hat based systems.')
   validate_bool($manage_kernel)
   validate_bool($manage_package)
+  notice("The proxy is: ${proxy}")
+  notice("The http_proxy is: ${::http_proxy}")
 
   class { 'docker::install': } ->
   class { 'docker::config': } ~>
